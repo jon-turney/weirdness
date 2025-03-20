@@ -1,0 +1,34 @@
+name: cygwin
+
+on: push
+
+jobs:
+  windows-build:
+    runs-on: windows-latest
+    name: Windows native ${{ matrix.pkgarch }}
+
+    steps:
+    # checkout action uses the native git (we can avoid this messing up line
+    # endings, but this could still be dangerous e.g if we need symlinks in the
+    # repo)
+    - run: git config --global core.autocrlf input
+    - uses: actions/checkout@v4
+
+    # install cygwin and build tools
+    - name: Install Cygwin
+      uses: cygwin/cygwin-install-action@master
+      with:
+        packages: >-
+          cygutils-extra,
+          gcc-g++,
+          make,
+
+    # run script
+    - name: Run script
+      run: bash -l weirdness.sh
+      env:
+        CHERE_INVOKING: 1
+
+    # workaround problems with actions/checkout post-run step using cygwin git
+    - name: Avoid actions/checkout post-run step using Cygwin git
+      run: bash -c 'rm -f /usr/bin/git.exe'
