@@ -19,6 +19,8 @@ jobs:
       uses: cygwin/cygwin-install-action@master
       with:
         packages: >-
+          autoconf,
+          cygport,
           cygutils-extra,
           gcc-g++,
           make,

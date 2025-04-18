@@ -2,15 +2,11 @@
 set -x
 
 uname -a
-id
 
-mount
-cd $TEMP
-pwd
+export WANT_AUTOCONF=2.7
+autoconf --version
 
-umask 077
-touch foo
-ls -ln foo
+cygport xhost.cygport fetch
+cygport xhost.cygport prep
+cygport --debug xhost.cygport compile
 
-getfacl foo
-icacls foo
