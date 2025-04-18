@@ -24,6 +24,7 @@ jobs:
           cygutils-extra,
           gcc-g++,
           make,
+          xorg-util-macros,
 
     # run script
     - name: Run script
